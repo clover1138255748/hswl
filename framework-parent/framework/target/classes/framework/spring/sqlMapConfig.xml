@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="ErrorCodeDO" type="com.opengroup.exception.ErrorCode"/>
+		<typeAlias alias="SequenceDO" type="com.opengroup.tools.sequence.SequenceDO"/>
+		<typeAlias alias="EnumLabelDO" type="com.opengroup.tools.enumTool.EnumLabelDO"/>
+	</typeAliases>
+	
+	<plugins>
+		<plugin interceptor="com.opengroup.tools.log.MybatisPerfLogInterceptor"></plugin>
+	</plugins>
+	
+	<mappers>
+		<mapper resource="framework_dal/sql/sequence.xml" />
+		<mapper resource="framework_dal/sql/error_code.xml" />
+		<mapper resource="framework_dal/sql/enum_label.xml" />
+	</mappers>
+</configuration>

@@ -1,0 +1,2 @@
+process=com.opengroup.deploy.handle.process.ProcessObjectFactory
+thread=com.opengroup.deploy.handle.thread.RunnableObjectFactory

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    ">
+
+	<bean id="functionFactory"
+		class="com.opengroup.hongshi.verify.impl.DefaultFunctionFactory">
+		<property name="tooler" ref="tooler" />
+		<property name="functions">
+			<list>
+				<bean class="com.opengroup.hongshi.verify.function.SizeFunction" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="tooler" class="com.opengroup.hongshi.verify.tool.Tooler">
+		<property name="functionFactory" ref="functionFactory" />
+	</bean>
+
+	<bean id="andAdapter" class="com.opengroup.hongshi.verify.config.adapter.AndAdapter">
+		<property name="tooler" ref="tooler" />
+		<property name="adapterFactory" ref="adapterFactory" />
+	</bean>
+
+	<bean id="blankAdapter"
+		class="com.opengroup.hongshi.verify.config.adapter.BlankAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="choiceAdapter"
+		class="com.opengroup.hongshi.verify.config.adapter.ChoiceAdapter">
+		<property name="tooler" ref="tooler" />
+		<property name="adapterFactory" ref="adapterFactory" />
+	</bean>
+
+	<bean id="eqAdapter" class="com.opengroup.hongshi.verify.config.adapter.EqAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="geAdapter" class="com.opengroup.hongshi.verify.config.adapter.GeAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="gtAdapter" class="com.opengroup.hongshi.verify.config.adapter.GtAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="inAdapter" class="com.opengroup.hongshi.verify.config.adapter.InAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="leAdapter" class="com.opengroup.hongshi.verify.config.adapter.LeAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="ltAdapter" class="com.opengroup.hongshi.verify.config.adapter.LtAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="multipleAdapter"
+		class="com.opengroup.hongshi.verify.config.adapter.MultipleAdapter">
+		<property name="tooler" ref="tooler" />
+		<property name="adapterFactory" ref="adapterFactory" />
+	</bean>
+
+	<bean id="nullAdapter" class="com.opengroup.hongshi.verify.config.adapter.NullAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="orAdapter" class="com.opengroup.hongshi.verify.config.adapter.OrAdapter">
+		<property name="tooler" ref="tooler" />
+		<property name="adapterFactory" ref="adapterFactory" />
+	</bean>
+
+	<bean id="patternAdapter"
+		class="com.opengroup.hongshi.verify.config.adapter.PatternAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="rangeAdapter"
+		class="com.opengroup.hongshi.verify.config.adapter.RangeAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="typeofAdapter"
+		class="com.opengroup.hongshi.verify.config.adapter.TypeofAdapter">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="adapterFactory"
+		class="com.opengroup.hongshi.verify.config.DefaultAdapterFactory">
+		<property name="adapters">
+			<list value-type="com.opengroup.hongshi.verify.config.Adapter">
+				<ref bean="andAdapter" />
+				<ref bean="blankAdapter" />
+				<ref bean="choiceAdapter" />
+				<ref bean="eqAdapter" />
+				<ref bean="geAdapter" />
+				<ref bean="gtAdapter" />
+				<ref bean="inAdapter" />
+				<ref bean="leAdapter" />
+				<ref bean="ltAdapter" />
+				<ref bean="multipleAdapter" />
+				<ref bean="nullAdapter" />
+				<ref bean="orAdapter" />
+				<ref bean="patternAdapter" />
+				<ref bean="rangeAdapter" />
+				<ref bean="typeofAdapter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="verificationFactory"
+		class="com.opengroup.hongshi.verify.config.XmlVerificationFactory"
+		init-method="init">
+		<property name="adapterFactory" ref="adapterFactory" />
+		<property name="internationalization" ref="internationalization" />
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+
+	<bean id="internationalization"
+		class="com.opengroup.hongshi.verify.impl.DefaultInternationalization"
+		init-method="init">
+		<property name="tooler" ref="tooler" />
+	</bean>
+
+	<bean id="verificationAdvice"
+		class="com.opengroup.hongshi.verify.annotation.VerificationAdvice">
+		<property name="verificationFactory" ref="verificationFactory" />
+	</bean>
+	<aop:config>
+		<aop:pointcut
+			expression="@annotation(com.opengroup.hongshi.verify.annotation.Verify)"
+			id="verificationPointcut" />
+		<aop:advisor advice-ref="verificationAdvice" pointcut-ref="verificationPointcut" />
+	</aop:config>
+</beans>

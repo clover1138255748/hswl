@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Class-Path: lib/spring-aop-4.0.0.RELEASE.jar lib/aopalliance-1.0.jar l
+ ib/spring-beans-4.0.0.RELEASE.jar lib/spring-core-4.0.0.RELEASE.jar l
+ ib/commons-logging-1.1.1.jar lib/framework-0.0.1-SNAPSHOT.jar lib/pin
+ yin4j-2.5.0.jar lib/core-2.3.0.jar lib/jedis-2.7.2.jar lib/commons-po
+ ol2-2.3.jar lib/facade-support-0.0.1-SNAPSHOT.jar lib/cglib-nodep-2.2
+ .2.jar lib/jta-1.1.jar lib/transactions-jdbc-3.9.3.jar lib/transactio
+ ns-jta-3.9.3.jar lib/transactions-3.9.3.jar lib/transactions-api-3.9.
+ 3.jar lib/atomikos-util-3.9.3.jar lib/commons-lang3-3.4.jar lib/log4j
+ -1.2.16.jar lib/httpclient-4.4.1.jar lib/httpcore-4.4.1.jar lib/commo
+ ns-codec-1.9.jar lib/httpmime-4.2.1.jar lib/slf4j-log4j12-1.6.6.jar l
+ ib/slf4j-api-1.6.6.jar lib/bcprov-ext-jdk15on-1.52.jar lib/bcpkix_jdk
+ 15on-154.jar lib/java-image-scaling-0.8.5.jar lib/jsqlparser-0.9.4.ja
+ r lib/pinyin4j-2.5.1.jar lib/netty-all-4.1.8.Final.jar lib/reflection
+ s-0.9.11.jar lib/guava-20.0.jar lib/javassist-3.21.0-GA.jar lib/javam
+ elody-core-1.70.0.jar lib/jrobin-1.5.9.jar lib/spring-websocket-4.0.0
+ .RELEASE.jar lib/spring-web-4.0.0.RELEASE.jar
+Build-Jdk: 1.7.0_67
+Built-By: Administrator
+Created-By: Maven Integration for Eclipse
+Main-Class: com.opengroup.deploy.main.LoadManager
+

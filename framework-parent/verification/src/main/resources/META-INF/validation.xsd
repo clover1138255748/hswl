@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.hongshi.com/validation"
+	xmlns:tns="http://www.hongshi.com/validation" elementFormDefault="qualified">
+
+
+	<complexType name="baseType">
+		<attribute name="not" type="boolean" default="false" />
+		<attribute name="code" type="string" />
+		<attribute name="message" type="string" />
+		<attribute name="extra" type="string" />
+		<attribute name="id" type="string" />
+		<attribute name="source" type="string" />
+		<attribute name="target" type="string" />
+	</complexType>
+
+	<complexType name="notBoolBaseType">
+		<complexContent>
+			<restriction base="tns:baseType">
+				<attribute name="source" type="string" use="required" />
+				<attribute name="target" type="string" use="required" />
+			</restriction>
+		</complexContent>
+	</complexType>
+
+	<complexType name="notBoolMultipleChildType">
+		<complexContent>
+			<restriction base="tns:baseType">
+				<attribute name="target" type="string" use="required" />
+			</restriction>
+		</complexContent>
+	</complexType>
+
+	<complexType name="boolBaseType">
+		<complexContent>
+			<restriction base="tns:baseType">
+				<attribute name="source" type="string" use="required" />
+				<attribute name="target" type="string" default="false" />
+			</restriction>
+		</complexContent>
+	</complexType>
+
+	<complexType name="boolMultipleChildType">
+		<complexContent>
+			<restriction base="tns:baseType">
+				<attribute name="target" type="string" default="false" />
+			</restriction>
+		</complexContent>
+	</complexType>
+
+	<complexType name="multipleType">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<choice>
+				<element name="blank" type="tns:boolMultipleChildType" />
+				<element name="eq" type="tns:notBoolMultipleChildType" />
+				<element name="ge" type="tns:notBoolMultipleChildType" />
+				<element name="gt" type="tns:notBoolMultipleChildType" />
+				<element name="in" type="tns:notBoolMultipleChildType" />
+				<element name="le" type="tns:notBoolMultipleChildType" />
+				<element name="lt" type="tns:notBoolMultipleChildType" />
+				<element name="null" type="tns:boolMultipleChildType" />
+				<element name="pattern" type="tns:notBoolMultipleChildType" />
+				<element name="range" type="tns:notBoolMultipleChildType" />
+				<element name="typeof" type="tns:notBoolMultipleChildType" />
+				<element name="and" type="tns:notBoolBaseType" />
+				<element name="or" type="tns:notBoolBaseType" />
+				<element name="choice" type="tns:choiceType" />
+				<element name="multiple" type="tns:multipleType" />
+			</choice>
+		</sequence>
+		<attribute name="id" type="string" />
+		<attribute name="source" type="string" />
+	</complexType>
+
+	<complexType name="choiceType">
+		<complexContent>
+			<extension base="tns:baseType">
+				<sequence minOccurs="1" maxOccurs="unbounded">
+					<choice>
+						<element name="blank" type="tns:boolBaseType" />
+						<element name="eq" type="tns:notBoolBaseType" />
+						<element name="ge" type="tns:notBoolBaseType" />
+						<element name="gt" type="tns:notBoolBaseType" />
+						<element name="in" type="tns:notBoolBaseType" />
+						<element name="le" type="tns:notBoolBaseType" />
+						<element name="lt" type="tns:notBoolBaseType" />
+						<element name="null" type="tns:boolBaseType" />
+						<element name="pattern" type="tns:notBoolBaseType" />
+						<element name="range" type="tns:notBoolBaseType" />
+						<element name="typeof" type="tns:notBoolBaseType" />
+						<element name="and" type="tns:notBoolBaseType" />
+						<element name="or" type="tns:notBoolBaseType" />
+						<element name="choice" type="tns:choiceType" />
+						<element name="multiple" type="tns:multipleType" />
+					</choice>
+				</sequence>
+				<attribute name="name">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="and" />
+							<enumeration value="blank" />
+							<enumeration value="eq" />
+							<enumeration value="ge" />
+							<enumeration value="gt" />
+							<enumeration value="in" />
+							<enumeration value="le" />
+							<enumeration value="lt" />
+							<enumeration value="null" />
+							<enumeration value="or" />
+							<enumeration value="pattern" />
+							<enumeration value="range" />
+							<enumeration value="typeof" />
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="ref" type="string" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="refBaseRuleType">
+		<complexContent>
+			<restriction base="tns:baseType">
+				<attribute name="id" type="string" use="required" />
+			</restriction>
+		</complexContent>
+	</complexType>
+
+	<complexType name="refNotBoolRuleType">
+		<complexContent>
+			<restriction base="tns:notBoolBaseType">
+				<attribute name="id" type="string" use="required" />
+			</restriction>
+		</complexContent>
+	</complexType>
+
+	<complexType name="refBoolRuleType">
+		<complexContent>
+			<restriction base="tns:boolBaseType">
+				<attribute name="id" type="string" use="required" />
+			</restriction>
+		</complexContent>
+	</complexType>
+
+	<complexType name="refMultipleType">
+		<sequence minOccurs="1" maxOccurs="unbounded">
+			<choice>
+				<element name="blank" type="tns:boolBaseType" />
+				<element name="eq" type="tns:notBoolBaseType" />
+				<element name="ge" type="tns:notBoolBaseType" />
+				<element name="gt" type="tns:notBoolBaseType" />
+				<element name="in" type="tns:notBoolBaseType" />
+				<element name="le" type="tns:notBoolBaseType" />
+				<element name="lt" type="tns:notBoolBaseType" />
+				<element name="null" type="tns:boolBaseType" />
+				<element name="pattern" type="tns:notBoolBaseType" />
+				<element name="range" type="tns:notBoolBaseType" />
+				<element name="typeof" type="tns:notBoolBaseType" />
+				<element name="and" type="tns:notBoolBaseType" />
+				<element name="or" type="tns:notBoolBaseType" />
+				<element name="choice" type="tns:choiceType" />
+				<element name="multiple" type="tns:multipleType" />
+			</choice>
+		</sequence>
+		<attribute name="id" type="string" use="required" />
+		<attribute name="source" type="string" />
+	</complexType>
+
+	<complexType name="refChoiceType">
+		<complexContent>
+			<extension base="tns:refBaseRuleType">
+				<sequence minOccurs="1" maxOccurs="unbounded">
+					<choice>
+						<element name="blank" type="tns:boolBaseType" />
+						<element name="eq" type="tns:notBoolBaseType" />
+						<element name="ge" type="tns:notBoolBaseType" />
+						<element name="gt" type="tns:notBoolBaseType" />
+						<element name="in" type="tns:notBoolBaseType" />
+						<element name="le" type="tns:notBoolBaseType" />
+						<element name="lt" type="tns:notBoolBaseType" />
+						<element name="null" type="tns:boolBaseType" />
+						<element name="pattern" type="tns:notBoolBaseType" />
+						<element name="range" type="tns:notBoolBaseType" />
+						<element name="typeof" type="tns:notBoolBaseType" />
+						<element name="and" type="tns:notBoolBaseType" />
+						<element name="or" type="tns:notBoolBaseType" />
+						<element name="choice" type="tns:choiceType" />
+						<element name="multiple" type="tns:multipleType" />
+					</choice>
+				</sequence>
+				<attribute name="name">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="and" />
+							<enumeration value="blank" />
+							<enumeration value="eq" />
+							<enumeration value="ge" />
+							<enumeration value="gt" />
+							<enumeration value="in" />
+							<enumeration value="le" />
+							<enumeration value="lt" />
+							<enumeration value="null" />
+							<enumeration value="or" />
+							<enumeration value="pattern" />
+							<enumeration value="range" />
+							<enumeration value="typeof" />
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="ref" type="string" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<element name="validations">
+		<complexType>
+			<sequence minOccurs="1" maxOccurs="unbounded">
+				<element name="validation">
+					<complexType>
+						<sequence>
+							<choice minOccurs="0" maxOccurs="2">
+								<element name="extras">
+									<complexType>
+										<sequence minOccurs="1" maxOccurs="unbounded">
+											<element name="extra">
+												<complexType>
+													<sequence minOccurs="1" maxOccurs="unbounded">
+														<element name="option">
+															<complexType>
+																<attribute name="key" type="string" use="required" />
+																<attribute name="value" type="string" use="required" />
+															</complexType>
+														</element>
+													</sequence>
+													<attribute name="id" type="string" use="required" />
+												</complexType>
+											</element>
+										</sequence>
+									</complexType>
+								</element>
+								<element name="refrule">
+									<complexType>
+										<sequence>
+											<choice minOccurs="1" maxOccurs="unbounded">
+												<element name="blank" type="tns:refBoolRuleType" />
+												<element name="eq" type="tns:refNotBoolRuleType" />
+												<element name="ge" type="tns:refNotBoolRuleType" />
+												<element name="gt" type="tns:refNotBoolRuleType" />
+												<element name="in" type="tns:refNotBoolRuleType" />
+												<element name="le" type="tns:refNotBoolRuleType" />
+												<element name="lt" type="tns:refNotBoolRuleType" />
+												<element name="null" type="tns:refBoolRuleType" />
+												<element name="pattern" type="tns:refNotBoolRuleType" />
+												<element name="range" type="tns:refNotBoolRuleType" />
+												<element name="typeof" type="tns:refNotBoolRuleType" />
+												<element name="and" type="tns:refNotBoolRuleType" />
+												<element name="or" type="tns:refNotBoolRuleType" />
+												<element name="choice" type="tns:refChoiceType" />
+												<element name="multiple" type="tns:refMultipleType" />
+											</choice>
+										</sequence>
+									</complexType>
+								</element>
+							</choice>
+							<choice minOccurs="1" maxOccurs="unbounded">
+								<element name="blank" type="tns:boolBaseType" />
+								<element name="eq" type="tns:notBoolBaseType" />
+								<element name="ge" type="tns:notBoolBaseType" />
+								<element name="gt" type="tns:notBoolBaseType" />
+								<element name="in" type="tns:notBoolBaseType" />
+								<element name="le" type="tns:notBoolBaseType" />
+								<element name="lt" type="tns:notBoolBaseType" />
+								<element name="null" type="tns:boolBaseType" />
+								<element name="pattern" type="tns:notBoolBaseType" />
+								<element name="range" type="tns:notBoolBaseType" />
+								<element name="typeof" type="tns:notBoolBaseType" />
+								<element name="and" type="tns:notBoolBaseType" />
+								<element name="or" type="tns:notBoolBaseType" />
+								<element name="choice" type="tns:choiceType" />
+								<element name="multiple" type="tns:multipleType" />
+							</choice>
+						</sequence>
+						<attribute name="id" type="string" use="required" />
+						<attribute name="source" type="string" />
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

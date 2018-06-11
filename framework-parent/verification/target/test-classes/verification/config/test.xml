@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:validations xmlns:tns="http://www.hongshi.com/validation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hongshi.com/validation ../../../../main/resources/META-INF/validation.xsd ">
+	<tns:validation id="test">
+		<tns:eq source="$.name" target="test" code="1000001" message="名称" />
+		<tns:gt source="#size($.name)" target="10" code="1000002" not="true" />
+	</tns:validation>
+</tns:validations>

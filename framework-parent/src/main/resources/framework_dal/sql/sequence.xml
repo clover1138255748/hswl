@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.opengroup.framework.dao.SequenceDAO">  
+	<resultMap id="resultMap" type="SequenceDO">
+		<result property="name" column="name"/>
+		<result property="currentValue" column="current_value"/>
+		<result property="increment" column="_increment"/>
+		<result property="maxVal" column="_max_val"/>
+	</resultMap>
+	
+	<sql id="allFields">
+		name,
+		current_value,
+		_increment,
+		_max_val
+	</sql>
+	
+	<select id="nextValue" parameterType="string" resultType="long">
+		select _nextval(#{value});
+	</select>
+	
+	<insert id="insertSequence" parameterType="SequenceDO">
+		insert into tb_sequence values(#{name},#{currentValue},#{increment},#{maxVal})
+	</insert>
+	
+	<select id="selectSequence" parameterType="string" resultMap="resultMap">
+		select 
+			<include refid="allFields"></include>
+		from tb_sequence
+		where name=#{value}
+	</select>
+</mapper>

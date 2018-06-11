@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    ">
+	
+	<bean id="test_framework_dal_dataSource" class="com.opengroup.middleware.dbsharding.ShardingDatasource" init-method="init" destroy-method="close">
+		<property name="uniqueResourceName" value="test_framework_ds" />
+		<property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" />
+		<property name="xaProperties">
+			<props>
+                <prop key="user">dbadmin</prop>
+                <prop key="password">hello1234</prop>
+                <prop key="url">jdbc:mysql://db.hongshiwl.com:3306/test_stb_{0}?useUnicode=true&amp;characterEncoding=utf8</prop>
+            </props>
+        </property>
+	 	<property name="minPoolSize" value="5" />
+        <property name="maxPoolSize" value="5"></property>
+        <property name="reapTimeout" value="20000"/>  
+		<property name="maxIdleTime" value="60"/>
+		<property name="testQuery" value="select 1 from dual"></property>
+		<property name="dsNum" value="3"></property>
+	</bean>
+
+	<bean id="test_frameworkSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:/framework/test_spring/sqlMapConfig.xml" />
+		<property name="dataSource" ref="test_framework_dal_dataSource" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="test_frameworkSqlSessionFactory" />
+		<property name="basePackage" value="com.opengroup.framework.testDal" />
+		<property name="annotationClass" value="com.opengroup.common.anno.DaoTag" />
+		<property name="nameGenerator" ref="dalNameGenerator"></property>
+	</bean>
+
+</beans>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- Log4j配置文件。 -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- APPENDERS -->
+	<!-- [公共Appender] -->
+	<!-- 控制台STDOUT -->
+	<appender name="STDOUT-APPENDER" class="org.apache.log4j.ConsoleAppender">
+		<param name="encoding" value="GBK" />
+		<param name="target" value="System.out" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%T%n" />
+		</layout>
+	</appender>
+
+	<!-- 控制台STDERR -->
+	<appender name="STDERR-APPENDER" class="org.apache.log4j.ConsoleAppender">
+		<param name="encoding" value="GBK" />
+		<param name="target" value="System.err" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%T%n" />
+		</layout>
+	</appender>
+	<!-- 默认 -->
+	<appender name="DEFAULT_APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${loggingRoot.common}/default.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="GBK" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%T%n" />
+		</layout>
+	</appender>
+	<!-- 性能日志 -->
+	<appender name="PERF_APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${loggingRoot.common}/perf.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="GBK" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%m%T%n" />
+		</layout>
+	</appender>
+
+	<!-- 框架日志 -->
+	<appender name="FRAMEWORK_APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${loggingRoot.common}/framework.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="GBK" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%T%n" />
+		</layout>
+	</appender>
+
+	<!-- 数据访问层 -->
+	<appender name="ATOMIKOS_APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${loggingRoot.common}/atomikos.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="GBK" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%T%n" />
+		</layout>
+	</appender>
+
+	<!-- 数据访问层 -->
+	<appender name="DAL_APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${loggingRoot.common}/dal.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="GBK" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%T%n" />
+		</layout>
+	</appender>
+
+	<!-- 本模块的Appender -->
+	<!-- 默认 -->
+	<appender name="WF_DEFAULT_APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${loggingRoot.wf}/default.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="GBK" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%T%n" />
+		</layout>
+	</appender>
+
+	<!-- 汇总错误 -->
+	<appender name="WF_ERROR_APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${loggingRoot.wf}/error.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="GBK" />
+		<param name="threshold" value="error" />
+		<layout class="com.opengroup.tools.log.ExtPatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%T%n" />
+		</layout>
+	</appender>
+	<!-- Loggers -->
+	<!-- [公共Logger] -->
+	<!-- 控制台STDOUT - STDOUT -->
+	<logger name="STDOUT" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT-APPENDER" />
+	</logger>
+
+	<!-- 控制台STDERR - STDERR -->
+	<logger name="STDERR" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="STDERR-APPENDER" />
+	</logger>
+
+	<!-- 性能日志 -->
+	<logger name="PERF_LOG" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="PERF_APPENDER" />
+	</logger>
+
+	<!-- ATOMIKOS日志 -->
+	<logger name="com.atomikos" additivity="false">
+		<level value="${logging.atomikos.level}" />
+		<appender-ref ref="ATOMIKOS_APPENDER" />
+	</logger>
+
+	<!-- DAL日志 -->
+	<logger name="com.atomikos.jdbc.AtomikosConnectionProxy"
+		additivity="false">
+		<level value="${logging.dal.level}" />
+		<appender-ref ref="DAL_APPENDER" />
+	</logger>
+
+	<!-- 框架日志 -->
+	<logger name="com.opengroup" additivity="false">
+		<level value="${logging.framework.level}" />
+		<appender-ref ref="FRAMEWORK_APPENDER" />
+	</logger>
+
+	<!-- 默认日志 -->
+	<logger name="com.opengroup.hongshi" additivity="false">
+		<level value="${logging.level}" />
+		<appender-ref ref="DEFAULT_APPENDER" />
+	</logger>
+
+	<!-- [应用层Logger] -->
+	<!-- wf默认日志 -->
+	<logger name="com.opengroup.hongshi.wf" additivity="false">
+		<level value="${logging.wf.level}" />
+		<appender-ref ref="WF_DEFAULT_APPENDER" />
+	</logger>
+
+	<!-- wf错误日志 -->
+	<logger name="com.opengroup.hongshi.wf" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="WF_ERROR_APPENDER" />
+	</logger>
+
+
+	<!-- Root logger -->
+	<root>
+		<level value="${logging.level}" />
+		<appender-ref ref="DEFAULT_APPENDER" />
+	</root>
+
+</log4j:configuration>
+
